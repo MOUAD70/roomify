@@ -37,6 +37,12 @@ const Upload = ({ onComplete }: UploadProps) => {
     (file: File) => {
       if (!isSignedIn) return;
 
+      const MAX_SIZE_MB = 50;
+      if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+        // Consider showing user feedback here
+        return;
+      }
+
       setFile(file);
       setProgress(0);
 
@@ -88,7 +94,7 @@ const Upload = ({ onComplete }: UploadProps) => {
     if (!isSignedIn) return;
 
     const droppedFile = e.dataTransfer.files[0];
-    const allowedTypes = ["image/jpeg", "image/png"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (droppedFile && allowedTypes.includes(droppedFile.type)) {
       processFile(droppedFile);
     }
@@ -98,7 +104,8 @@ const Upload = ({ onComplete }: UploadProps) => {
     if (!isSignedIn) return;
 
     const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (selectedFile && allowedTypes.includes(selectedFile.type)) {
       processFile(selectedFile);
     }
   };
