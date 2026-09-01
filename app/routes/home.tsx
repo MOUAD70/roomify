@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar";
 import { ArrowRight, ArrowUpRight, Clock, Layers } from "lucide-react";
 import Button from "../../components/ui/Button";
 import Upload from "../../components/Upload";
-import { Navigate, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { createProject, getProjects } from "../../lib/puter.action";
 
@@ -129,10 +129,11 @@ export default function Home() {
           <div className="projects-grid">
             {projects.map(
               ({ id, name, renderedImage, sourceImage, timestamp }) => (
-                <div
+                <Link
                   key={id}
                   className="project-card group"
-                  onClick={() => navigate(`/visualizer/${id}`)}
+                  to={`/visualizer/${id}`}
+                  
                 >
                   <div className="preview">
                     <img src={renderedImage || sourceImage} alt="project" />
@@ -156,7 +157,7 @@ export default function Home() {
                       <ArrowUpRight size={18} />
                     </div>
                   </div>
-                </div>
+                </Link>
               ),
             )}
           </div>
